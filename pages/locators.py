@@ -18,3 +18,9 @@ class ProductPageLocators:
     PRODUCT_NAME = (By.CSS_SELECTOR, "div[class='col-sm-6 product_main'] h1")
     PRODUCT_NAME_IN_BASKET = (By.CSS_SELECTOR, "div[class='alertinner '] > strong")
     SUCCESS_MESSAGE = (By.CSS_SELECTOR, ".alert-success")
+
+
+class BasketPageLocators:
+    BASKET_BUTTON = (By.CSS_SELECTOR, ".basket-mini > .btn-group > a")
+    BASKET_PRODUCTS = (By.CSS_SELECTOR, ".basket-title > .row")
+    BASKET_TEXT_IF_EMPTY = (By.CSS_SELECTOR, "div[id='content_inner'] > p > a")
