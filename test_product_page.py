@@ -1,6 +1,7 @@
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
 from .pages.login_page import LoginPage
+from .pages.main_page import MainPage
 import pytest
 import time
 
@@ -13,7 +14,7 @@ promo_links[7] = pytest.param(bad_link, marks=pytest.mark.xfail)
 
 
 @pytest.mark.parametrize('url', promo_links)
-@pytest.mark.skip(reason='Long test')
+@pytest.mark.need_review
 def test_guest_can_add_product_to_basket(browser, url):
     page = ProductPage(browser, url)
     page.open()
@@ -23,7 +24,7 @@ def test_guest_can_add_product_to_basket(browser, url):
     page.price_product_equals_price_basket()
 
 
-@pytest.mark.xfail
+@pytest.mark.skip(reason='')
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     page = ProductPage(browser, link_success)
     page.open()
@@ -45,11 +46,21 @@ def test_message_disappeared_after_adding_product_to_basket(browser):
     page.should_success_message_disappeared()
 
 
+@pytest.mark.need_review
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     page = BasketPage(browser, link_success)
     page.open()
     page.should_be_basket_is_empty()
     page.should_be_basket_text_if_empty()
+
+
+@pytest.mark.need_review
+def test_guest_can_go_to_login_page_from_product_page(browser):
+    page = MainPage(browser, link)
+    page.open()
+    page.go_to_login_page()
+    login_page = LoginPage(browser, browser.current_url)
+    login_page.should_be_login_page()
 
 
 @pytest.mark.authuser
@@ -67,6 +78,7 @@ class TestUserAddToBasketFromProductPage:
         page.open()
         page.should_not_be_success_message()
 
+    @pytest.mark.need_review
     def test_user_can_add_product_to_basket(self, browser):
         page = ProductPage(browser, link_success)
         page.open()

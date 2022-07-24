@@ -1,8 +1,5 @@
-import pytest
-
 from .base_page import BasePage
 from .locators import LoginPageLocators
-import time
 
 
 class LoginPage(BasePage):
@@ -13,7 +10,7 @@ class LoginPage(BasePage):
         self.should_be_register_form()
 
     def should_be_login_url(self):
-        assert self.browser.current_url == LoginPageLocators.LOGIN_URL, f"Login url incorrect. " \
+        assert LoginPageLocators.LOGIN_URL in self.browser.current_url, f"Login url incorrect. " \
                                                                         f"Current url: {self.browser.current_url}"
 
     def should_be_login_form(self):
