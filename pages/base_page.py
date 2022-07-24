@@ -11,6 +11,7 @@ class BasePage:
 
     def open(self):
         self.browser.get(self.url)
+        print(f'[+] Open url: {self.url}')
 
     def is_element_present(self, how, what):
         try:
@@ -28,7 +29,7 @@ class BasePage:
         try:
             alert = self.browser.switch_to.alert
             alert_text = alert.text
-            print(f"Your code: {alert_text}")
+            print(f"[+] Your code: {alert_text}")
             alert.accept()
         except NoAlertPresentException:
-            print("No second alert presented")
+            print("[-] No second alert presented")
