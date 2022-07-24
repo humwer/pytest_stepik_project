@@ -1,9 +1,12 @@
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
+from .pages.login_page import LoginPage
 import pytest
+import time
 
 link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
 link_success = 'https://selenium1py.pythonanywhere.com/en-gb/catalogue/the-shellcoders-handbook_209/'
+link_login = 'http://selenium1py.pythonanywhere.com/ru/accounts/login/'
 promo_links = [f'{link}?promo=offer{i}' for i in range(10)]
 bad_link = promo_links[7]
 promo_links[7] = pytest.param(bad_link, marks=pytest.mark.xfail)
@@ -47,3 +50,26 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     page.open()
     page.should_be_basket_is_empty()
     page.should_be_basket_text_if_empty()
+
+
+@pytest.mark.authuser
+class TestUserAddToBasketFromProductPage:
+
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        page = LoginPage(browser, link_login)
+        page.open()
+        email = str(time.time()) + "@fakemail.org"
+        page.register_new_user(email, 'TestingPassword')
+
+    def test_user_cant_see_success_message(self, browser):
+        page = ProductPage(browser, link_success)
+        page.open()
+        page.should_not_be_success_message()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        page = ProductPage(browser, link_success)
+        page.open()
+        page.add_to_backet()
+        page.product_name_equals_product_name_in_basket()
+        page.price_product_equals_price_basket()
