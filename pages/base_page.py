@@ -1,6 +1,7 @@
 from selenium.common.exceptions import NoSuchElementException, TimeoutException
 from selenium.common.exceptions import NoAlertPresentException
 from selenium.webdriver.support import expected_conditions as EC
+from .locators import BasePageLocators
 import math
 
 from selenium.webdriver.support.wait import WebDriverWait
@@ -37,6 +38,11 @@ class BasePage:
         except TimeoutException:
             return False
         return True
+
+    def should_be_authorized_user(self):
+        assert self.is_element_present(*BasePageLocators.USER_ICON), "User icon is not presented," \
+                                                                     " probably unauthorised user"
+        print('[+] User is authorised')
 
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
