@@ -14,6 +14,6 @@ class LoginPageLocators:
 class ProductPageLocators:
     BUTTON_ADD_TO_BASKET = (By.CSS_SELECTOR, "#add_to_basket_form > button[type='submit']")
     PRICE_PRODUCT = (By.CSS_SELECTOR, "p[class='price_color']")
-    PRICE_BASKET = (By.CSS_SELECTOR, "div[class='basket-mini pull-right hidden-xs']")
+    PRICE_BASKET = (By.CSS_SELECTOR, "div[class='alertinner '] p > strong")
     PRODUCT_NAME = (By.CSS_SELECTOR, "div[class='col-sm-6 product_main'] h1")
-    PRODUCT_NAME_IN_BASKET = (By.CSS_SELECTOR, "div[class='alertinner ']")
+    PRODUCT_NAME_IN_BASKET = (By.CSS_SELECTOR, "div[class='alertinner '] > strong")
